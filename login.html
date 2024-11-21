@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20230720/pngtree-4k-uhd-cyberspace-illuminated-with-geometric-3d-illustrations-image_3712790.jpg');
+            background-size: cover; /* ทำให้ภาพเต็มหน้าจอ */
+            background-position: center; /* จัดให้ภาพอยู่ตรงกลาง */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.8); /* เพิ่มความโปร่งแสงให้พื้นหลัง */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #007bff;
+            font-size: 28px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        .input-group input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .input-group input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .register-link {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .line-logo {
+            width: 30px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        .forgot-password-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .forgot-password-container input {
+            margin-bottom: 15px;
+        }
+
+        .forgot-password-container p {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>เข้าสู่ระบบ</h2>
+        <!-- Form Login -->
+        <form id="login-form" onsubmit="return validateLogin()">
+            <div class="input-group">
+                <input type="text" id="username" name="username" placeholder="ชื่อผู้ใช้" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="รหัสผ่าน" required>
+            </div>
+            <div class="input-group">
+                <input type="submit" value="เข้าสู่ระบบ">
+            </div>
+        </form>
+
+        <div class="register-link">
+            <p>ต้องการ username? <a href="https://line.me/ti/p/~Cham8910ok" target="_blank">
+                ติดต่อแอดมิน <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/LINE_logo.svg/1200px-LINE_logo.svg.png" alt="LINE Logo" class="line-logo">
+            </a></p>
+        </div>
+
+        <div class="forgot-password-container" id="forgot-password-container">
+            <h3>ลืมรหัสผ่าน?</h3>
+            <p>กรุณากรอกชื่อผู้ใช้เพื่อขอรับรหัสผ่าน</p>
+            <input type="text" id="forgot-username" placeholder="ชื่อผู้ใช้" required>
+            <input type="button" value="ขอรหัสผ่าน" onclick="showPassword()">
+            <p id="password-result"></p>
+        </div>
+
+        <div class="register-link">
+            <p><a href="javascript:void(0);" onclick="showForgotPasswordForm()">ลืมรหัส?</a></p>
+        </div>
+    </div>
+
+    <script>
+        // ข้อมูลผู้ใช้
+        const users = {
+            'user1': '2' // เพิ่ม user1 และ pass2
+        };
+
+        // ฟังก์ชันการตรวจสอบการล็อกอิน
+        function validateLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // ตรวจสอบว่า username และ password ตรงกับที่กำหนด
+            if ((username === 'admin' && password === '123') || (username === 'user1' && password === '2')) {
+                window.location.href = 'home.html';  // ไปที่หน้า home
+                return false;
+            } else {
+                alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+                return false;
+            }
+        }
+
+        // ฟังก์ชันที่แสดงฟอร์มการขอรหัส
+        function showForgotPasswordForm() {
+            document.getElementById('forgot-password-container').style.display = 'block';
+        }
+
+        // ฟังก์ชันที่แสดงรหัสผ่านเมื่อกรอกชื่อผู้ใช้
+        function showPassword() {
+            const forgotUsername = document.getElementById('forgot-username').value;
+            const passwordResult = document.getElementById('password-result');
+
+            if (users[forgotUsername]) {
+                passwordResult.textContent = "รหัสผ่านของคุณคือ: " + users[forgotUsername];
+            } else {
+                passwordResult.textContent = "ไม่พบชื่อผู้ใช้นี้";
+            }
+        }
+    </script>
+
+</body>
+</html>
